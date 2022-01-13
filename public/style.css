@@ -12,6 +12,7 @@ body{
     background-image: url('https://source.unsplash.com/1920x3400?weather,nature') ;
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
     font-family: sans-serif;
     color: white;
     font-family: 'Roboto Mono', monospace;
