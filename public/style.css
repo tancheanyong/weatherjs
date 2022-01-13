@@ -7,6 +7,7 @@
 
 body{
     height: 100vh;
+    max-height: 100vh;
     background-image: url('https://source.unsplash.com/1920x3400?weather,nature') ;
     background-size: cover;
     background-position: center;
@@ -101,6 +102,7 @@ body{
 .forecast{
     margin-top: 10px;
     width: 90%;
+    min-width: 400px;
     display: flex;
     justify-content: space-between;
 
