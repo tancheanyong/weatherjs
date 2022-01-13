@@ -1,3 +1,6 @@
+window.onload=()=>{
+    document.querySelector('body').style.height = window.innerHeight;
+}
 let interval;
 let weather = {
     apiKey: `43270b9e2390919f2b01b8dba56d6c43`,
