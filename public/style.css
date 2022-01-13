@@ -4,9 +4,8 @@
     box-sizing: border-box;
     
 }
-
 body{
-    height: 100%;
+    
     background-image: url('https://source.unsplash.com/1920x3400?weather,nature') ;
     background-size: cover;
     background-position: center;
@@ -15,9 +14,8 @@ body{
     font-family: 'Roboto Mono', monospace;
 }
 .container{
+    height: 100vh;
     position: relative;
-    height: 100%;
-    
     width: 100vw;
     display: flex;
     flex-direction: column;
