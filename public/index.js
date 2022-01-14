@@ -1,51 +1,5 @@
-// window.onload=()=>{
-//     document.querySelector('body').style.height = window.innerHeight;
-// }
 let interval;
 let weather = {
-    apiKey: `43270b9e2390919f2b01b8dba56d6c43`,
-    fetchWeather(query){
-        fetch(
-            `https://api.openweathermap.org/data/2.5/weather?q=${query}&units=metric&APPID=${this.apiKey}`
-        ).then((response)=>response.json())
-        .then((data)=>{
-            this.displayWeather(data);
-            this.forecast(data);
-            this.historical(data);
-        });
-    },
-    getTimeMil(data){
-        let t= new Date();
-        
-        return t.getTime()+t.getTimezoneOffset()*60000+data.timezone*1000;
-    },
-    getDate(data){
-        
-        let d=new Date(this.getTimeMil(data));
-
-        const months=["January","Febuary","March","April","May","June","July","August","September","October","November","December"];
-        const days=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-        
-        let day = days[d.getDay()];
-        let date = d.getDate();
-        let month = months[d.getMonth()];
-        let year = d.getFullYear();
-
-        return `${day}, ${date} ${month} ${year}`;
-    },
-    getTime(data){
-        
-        let time=new Date(this.getTimeMil(data));
-        return time.toLocaleTimeString();
-    },
-    getSunrise(data){
-        let t= new Date();
-        return data.sys.sunrise*1000+t.getTimezoneOffset()*60000+data.timezone*1000;
-    },
-    getSunset(data){
-        let t= new Date();
-        return data.sys.sunset*1000+t.getTimezoneOffset()*60000+data.timezone*1000;
-    },
     displayWeather(data){
         
         const {name} = data;
@@ -83,15 +37,40 @@ let weather = {
         }
         //change background image 
         document.body.style.backgroundImage = `url("https://source.unsplash.com/1920x3400?${name}")`
-        //remove user input after search
-        this.removeInput();
+        
 
     },
-    search(){
-        this.fetchWeather(document.querySelector("#searchbar").value)
+    getTimeMil(data){
+        let t= new Date();
+        
+        return t.getTime()+t.getTimezoneOffset()*60000+data.timezone*1000;
     },
-    removeInput(){
-        document.querySelector('#searchbar').value = ''; 
+    getTime(data){
+        
+        let time=new Date(this.getTimeMil(data));
+        return time.toLocaleTimeString();
+    },
+    getDate(data){
+        
+        let d=new Date(this.getTimeMil(data));
+
+        const months=["January","Febuary","March","April","May","June","July","August","September","October","November","December"];
+        const days=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+        
+        let day = days[d.getDay()];
+        let date = d.getDate();
+        let month = months[d.getMonth()];
+        let year = d.getFullYear();
+
+        return `${day}, ${date} ${month} ${year}`;
+    },
+    getSunrise(data){
+        let t= new Date();
+        return data.sys.sunrise*1000+t.getTimezoneOffset()*60000+data.timezone*1000;
+    },
+    getSunset(data){
+        let t= new Date();
+        return data.sys.sunset*1000+t.getTimezoneOffset()*60000+data.timezone*1000;
     },
     hotTheme(){
         document.querySelector('.container').style.backgroundImage = 'linear-gradient(to bottom, rgba(255,165,0,0.2),rgb(135,206,235))';
@@ -114,19 +93,18 @@ let weather = {
         document.querySelector('.clock').style.backgroundColor= 'rgba(0,0,139,0.8)';
         document.querySelector('.time').style.color= 'white';
     },
-    forecast(weatherData){
-        fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${weatherData.coord.lat}&lon=${weatherData.coord.lon}&exclude=current,minutely,hourly,alerts&units=metric&appid=${this.apiKey}`)
-        .then((response)=>response.json())
-        .then((forecastData)=>this.displayForecast(forecastData));
+    fetchForecast(weatherData){
+        fetch(`/forecast?lat=${weatherData.coord.lat}&lon=${weatherData.coord.lon}`)
+        .then(response=>response.json())
+        .then(forecastData=>this.displayForecast(forecastData));
     },
     displayForecast(forecastData){
         console.log(forecastData);
         document.querySelector('.tomorrowIcon').src="http://openweathermap.org/img/wn/"+forecastData.daily[0].weather[0].icon+"@2x.png";
         document.querySelector('.tomorrowTemp').innerHTML = Math.round(forecastData.daily[0].temp.day)+'&deg;C'
     },
-    historical(weatherData){
-        console.log(new Date(weatherData.dt*1000-24*60*60*1000));
-        fetch(`https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=${weatherData.coord.lat}&lon=${weatherData.coord.lon}&dt=${weatherData.dt-24*60*60}&units=metric&appid=${this.apiKey}`)
+    fetchHistorical(weatherData){
+        fetch(`/historical?lat=${weatherData.coord.lat}&lon=${weatherData.coord.lon}&dt=${weatherData.dt}`)
         .then(response=>response.json())
         .then(historicalData=>this.displayHistorical(historicalData));
     },
@@ -134,16 +112,24 @@ let weather = {
         console.log(historicalData);
         document.querySelector('.yesterdayIcon').src="http://openweathermap.org/img/wn/"+historicalData.current.weather[0].icon+"@2x.png";
         document.querySelector('.yesterdayTemp').innerHTML = Math.round(historicalData.current.temp)+'&deg;C'
+        this.removeInput();
+    },
+    removeInput(){
+        document.querySelector('#searchbar').value='';
     }
 }
 
 //search functions
-document.querySelector(".searchButton").addEventListener("click", ()=>{
-    weather.search();
+document.querySelector("#searchbox").addEventListener("submit", (e)=>{ 
+    e.preventDefault();
+    //api call to backend, passing user input
+    //backend responses with weather data object
+    let api=`/search?city=${document.querySelector('#searchbar').value}`;
+    fetch(api)
+    .then(response=>response.json())
+    .then((data)=>{
+        weather.displayWeather(data);
+        weather.fetchForecast(data);
+        weather.fetchHistorical(data);
+    });
 })
-document.querySelector("#searchbar").addEventListener('keyup', (e)=>{
-    if(e.key == 'Enter'){
-        weather.search();
-    }
-})
-

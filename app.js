@@ -1,4 +1,4 @@
-const express=require('express');
+const express = require('express');
 const app=express();
 
 //view engine
@@ -11,7 +11,7 @@ app.use(express.static(__dirname+'/public'));
 
 
 //routing
-const indexRouter=require('./route/indexRouter');
+const indexRouter=require('./route/indexRouter.js');
 app.use('/',indexRouter);
 
 //Hosting
