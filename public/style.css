@@ -6,9 +6,12 @@
 }
 html{
     height: 100%;
+    max-width: 600px;
 }
 body{
     height: 100%;
+    width: 100vw;
+    max-width: 600px;
     background-image: url('https://source.unsplash.com/1920x3400?weather,nature') ;
     background-size: cover;
     background-position: center;
@@ -20,7 +23,7 @@ body{
 .container{
     height: 100%;
     position: relative;
-    width: 100vw;
+    max-width: 600px;
     display: flex;
     flex-direction: column;
     justify-content: start;
@@ -79,6 +82,7 @@ body{
     font-weight: 300;
     font-size: 120px;
     text-shadow: 3px 3px rgba(50,50,70,0.5);
+    
 }
 .mainInfo .temperature span{
     font-size: 80px;
@@ -88,6 +92,7 @@ body{
     font-size: 25px;
     font-weight: 700;
     text-shadow: 2px 2px rgba(50,50,70,0.5);
+    
 }
 
 .secInfo{
