@@ -35,7 +35,7 @@ const fetchWeather = (city,callback) =>{
         });
     })
 }
-
+//fetching forecase data
 exports.forecast=(req,res)=>{
     let {lat,lon} = req.query;
     fetchForecast(lat,lon,(data)=>{
@@ -57,7 +57,7 @@ const fetchForecast=(lat,lon,callback)=>{
         })
     })
 }
-
+//fetching historical data
 exports.historical=(req,res)=>{
     let {lat,lon,dt} = req.query;
     fetchHistorical(lat,lon,dt,(data)=>{

@@ -40,16 +40,19 @@ let weather = {
         
 
     },
+    //get time in milliseconds
     getTimeMil(data){
         let t= new Date();
         
         return t.getTime()+t.getTimezoneOffset()*60000+data.timezone*1000;
     },
+    //get local time
     getTime(data){
         
         let time=new Date(this.getTimeMil(data));
         return time.toLocaleTimeString();
     },
+    //get local date
     getDate(data){
         
         let d=new Date(this.getTimeMil(data));
@@ -64,14 +67,17 @@ let weather = {
 
         return `${day}, ${date} ${month} ${year}`;
     },
+    //get sunrise time
     getSunrise(data){
         let t= new Date();
         return data.sys.sunrise*1000+t.getTimezoneOffset()*60000+data.timezone*1000;
     },
+    //get sunset time
     getSunset(data){
         let t= new Date();
         return data.sys.sunset*1000+t.getTimezoneOffset()*60000+data.timezone*1000;
     },
+    //themes
     hotTheme(){
         document.querySelector('.container').style.backgroundImage = 'linear-gradient(to bottom, rgba(255,165,0,0.2),rgb(135,206,235))';
         document.querySelector('#searchbox').style.background='rgba(255,165,0,0.5)';
@@ -93,6 +99,7 @@ let weather = {
         document.querySelector('.clock').style.backgroundColor= 'rgba(0,0,139,0.8)';
         document.querySelector('.time').style.color= 'white';
     },
+    //forecast
     fetchForecast(weatherData){
         fetch(`/forecast?lat=${weatherData.coord.lat}&lon=${weatherData.coord.lon}`)
         .then(response=>response.json())
@@ -103,6 +110,7 @@ let weather = {
         document.querySelector('.tomorrowIcon').src="http://openweathermap.org/img/wn/"+forecastData.daily[0].weather[0].icon+"@2x.png";
         document.querySelector('.tomorrowTemp').innerHTML = Math.round(forecastData.daily[0].temp.day)+'&deg;C'
     },
+    //historical data
     fetchHistorical(weatherData){
         fetch(`/historical?lat=${weatherData.coord.lat}&lon=${weatherData.coord.lon}&dt=${weatherData.dt}`)
         .then(response=>response.json())
@@ -114,6 +122,7 @@ let weather = {
         document.querySelector('.yesterdayTemp').innerHTML = Math.round(historicalData.current.temp)+'&deg;C'
         this.removeInput();
     },
+    //remove input on searchbar after search
     removeInput(){
         document.querySelector('#searchbar').value='';
     }
