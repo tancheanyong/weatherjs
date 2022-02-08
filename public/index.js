@@ -38,7 +38,7 @@ let weather = {
             this.nightTheme();
         }
         //change background image 
-        document.body.style.backgroundImage = `url("https://source.unsplash.com/1920x3400?${name}")`
+        document.body.style.backgroundImage = `url("https://source.unsplash.com/640x960?${name}")`
 
 
     },
