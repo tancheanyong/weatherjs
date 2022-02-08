@@ -1,56 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100;300;400;700&family=Sora:wght@200;400;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100;300;400;700&family=Sora:wght@200;400;600&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
     <title>Weather JS</title>
 </head>
+
 <body>
     <div class="container">
+        <!--search bar-->
         <form id="searchbox">
             <input type="text" name="searchbar" id="searchbar" placeholder="Search...">
-            <button type="submit" class="searchButton"><i class="fas fa-arrow-right"></i></button>  
+            <button type="submit" class="searchButton"><i class="fas fa-arrow-right"></i></button>
         </form>
-
+        <!--Location, temperature, and weather conditions-->
         <div class="mainInfo loading">
             <h1 class="city">Location</h1>
             <h2 class="temperature">32&deg;<span>C</span></h2>
 
             <div class="weatherDesc">Rainy</div>
-            
-        </div>
 
+        </div>
+        <!--Weather condition icon and date-->
         <div class="secInfo loading">
-            <img class='nowIcon' src="http://openweathermap.org/img/wn/10d@2x.png" ></img>
+            <img class='nowIcon' src="http://openweathermap.org/img/wn/10d@2x.png"></img>
             <p class="date">Sunday, 27 March 1996</p>
-            
-        </div>
 
+        </div>
+        <!--Yesterday's and tomorrow's weather conditions and temperatures -->
         <div class="forecast loading">
             <div class="yesterdayDiv">
-                <img class='yesterdayIcon' src="http://openweathermap.org/img/wn/10d@2x.png" ></img>
+                <img class='yesterdayIcon' src="http://openweathermap.org/img/wn/10d@2x.png"></img>
                 <p class="yesterdayTemp"></p>
                 <p>Yesterday</p>
             </div>
             <div class="tomorrowDiv">
-                <img class='tomorrowIcon' src="http://openweathermap.org/img/wn/10d@2x.png" ></img>
+                <img class='tomorrowIcon' src="http://openweathermap.org/img/wn/10d@2x.png"></img>
                 <p class="tomorrowTemp"></p>
                 <p>Tomorrow</p>
             </div>
         </div>
-        
+        <!--Clock-->
         <div class="clock loading">
             <p class="time">2146</p>
         </div>
     </div>
 
-   
+
     <script src="index.js"></script>
 </body>
+
 </html>
